@@ -1,0 +1,1977 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EXO 歷年專輯 · 完整收藏庫 (2012-2026)</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', 'Helvetica Neue', system-ui, sans-serif;
+            background: #f4f7f6;
+            margin: 0;
+            padding: 24px;
+            color: #1e2a36;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            font-weight: 600;
+            font-size: 2.2rem;
+            color: #1a1a2e;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+        .sub-intro {
+            text-align: center;
+            color: #5d6d7e;
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+        .upload-hint {
+            background: #eaf2f8;
+            border-radius: 40px;
+            padding: 8px 20px;
+            display: inline-block;
+            font-size: 0.85rem;
+            color: #2c3e50;
+            margin-top: 5px;
+        }
+        
+        /* 分類篩選按鈕 */
+        .filter-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+        .filter-btn {
+            background: white;
+            border: 1.5px solid #d5dbdb;
+            color: #2c3e50;
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .filter-btn:hover {
+            background: #e8f0fe;
+            border-color: #a0b4c8;
+        }
+        .filter-btn.active {
+            background: #1a252f;
+            border-color: #1a252f;
+            color: white;
+        }
+
+        /* 統計欄 */
+        .stats-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin: 10px auto 20px;
+            padding: 15px 25px;
+            background: white;
+            border-radius: 50px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            max-width: 650px;
+            border: 1px solid #e1e8ed;
+        }
+        .stats-text {
+            font-weight: 600;
+            color: #1a252f;
+            font-size: 1rem;
+        }
+        .stats-text span {
+            color: #d35400;
+            font-size: 1.2rem;
+        }
+        .progress-bar-container {
+            flex: 1;
+            height: 12px;
+            background: #e9ecef;
+            border-radius: 20px;
+            overflow: hidden;
+            max-width: 200px;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #27ae60, #2ecc71);
+            border-radius: 20px;
+            transition: width 0.3s ease;
+        }
+        .stats-percent {
+            font-weight: 700;
+            color: #27ae60;
+            font-size: 1rem;
+            min-width: 45px;
+        }
+
+        /* 備份按鈕 */
+        .backup-section {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 5px auto 20px;
+        }
+        .backup-btn {
+            background: white;
+            border: 1.5px solid #d5dbdb;
+            color: #2c3e50;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .backup-btn:hover {
+            background: #e8f0fe;
+            border-color: #a0b4c8;
+        }
+
+        .count-indicator {
+            text-align: center;
+            margin-top: 5px;
+            font-size: 0.8rem;
+            color: #7f8c8d;
+        }
+
+        .year-section {
+            margin-bottom: 45px;
+            transition: opacity 0.2s;
+        }
+        .year-section.hidden-section {
+            display: none;
+        }
+        .year-label {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2c3e50;
+            border-left: 6px solid #d35400;
+            padding-left: 18px;
+            margin-bottom: 22px;
+        }
+        .album-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 22px;
+        }
+        .album-card {
+            background: white;
+            border-radius: 18px;
+            padding: 18px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.2s ease;
+            border: 1px solid #edf2f2;
+            display: flex;
+            flex-direction: column;
+        }
+        .album-card.hidden-card {
+            display: none;
+        }
+        .album-header {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .cover-upload {
+            width: 105px;
+            height: 105px;
+            background: #e9ecef;
+            border-radius: 12px;
+            border: 2px dashed #bdc3c7;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+            transition: border 0.2s;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        .cover-upload:hover {
+            border-color: #d35400;
+            background-color: #fef5e7;
+        }
+        .cover-upload.has-image {
+            border-style: solid;
+            border-color: #27ae60;
+        }
+        .cover-upload .placeholder-text {
+            font-size: 0.65rem;
+            color: #6c7a89;
+            text-align: center;
+            padding: 8px;
+            font-weight: 500;
+            background: rgba(255,255,255,0.8);
+            border-radius: 20px;
+            pointer-events: none;
+        }
+        .cover-upload input {
+            display: none;
+        }
+        .album-meta {
+            flex: 1;
+        }
+        .album-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #1a252f;
+            margin-bottom: 5px;
+        }
+        .album-type {
+            display: inline-block;
+            background: #d4e6f1;
+            color: #1b4f72;
+            font-size: 0.7rem;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        .category-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            margin-left: 6px;
+            text-transform: uppercase;
+        }
+        /* 成員顏色 */
+        .badge-exo { background: #2c3e50; color: white; }
+        .badge-cbx { background: #1e8449; color: white; }
+        .badge-sc { background: #e67e22; color: white; }
+        .badge-baekhyun { background: #e74c3c; color: white; }
+        .badge-chanyeol { background: #f1c40f; color: #1a1a2e; }
+        .badge-kai { background: #8B4513; color: white; }
+        .badge-do { background: #555555; color: white; }
+        .badge-suho { background: #3498db; color: white; }
+        .badge-chen { background: #2ecc71; color: white; }
+        .badge-xiumin { background: #aed6f1; color: #1a1a2e; }
+        
+        .version-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-top: 4px;
+        }
+        .version-item {
+            display: flex;
+            align-items: center;
+            font-size: 0.85rem;
+            padding: 6px 8px;
+            background: #f8fbfc;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.1s;
+        }
+        .version-item:hover {
+            background: #eef3f7;
+        }
+        .version-item input {
+            margin-right: 12px;
+            width: 18px;
+            height: 18px;
+            accent-color: #d35400;
+            cursor: pointer;
+        }
+        details {
+            margin-top: 8px;
+            border: 1px solid #e1e8ed;
+            border-radius: 12px;
+            padding: 8px 12px;
+            background: #fdfdfd;
+        }
+        summary {
+            font-weight: 600;
+            color: #2980b9;
+            cursor: pointer;
+            outline: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            padding: 4px 0;
+        }
+        summary::-webkit-details-marker {
+            display: none;
+        }
+        summary::after {
+            content: "▼";
+            font-size: 0.7rem;
+            color: #5d6d7e;
+        }
+        details[open] summary::after {
+            content: "▲";
+        }
+        .sub-version-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px 12px;
+            margin-top: 12px;
+            padding-top: 10px;
+            border-top: 1px dashed #cbd5dc;
+        }
+        .sub-item {
+            display: flex;
+            align-items: center;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+        .sub-item input {
+            margin-right: 8px;
+            accent-color: #d35400;
+        }
+        .gold-note {
+            color: #f1c40f;
+            font-weight: 600;
+        }
+        .silver-note {
+            color: #95a5a6;
+            font-weight: 600;
+        }
+        .footer-note {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🎧 EXO 專輯收藏庫</h1>
+    <div class="sub-intro">
+        點擊封面框即可上傳圖片 · 勾選已收藏版本
+        <div class="upload-hint">📸 每張專輯都可以直接上傳封面圖，圖片會自動保存喺瀏覽器</div>
+    </div>
+
+    <!-- 分類篩選按鈕 -->
+    <div class="filter-section">
+        <button class="filter-btn active" data-filter="all">全部 💿</button>
+        <button class="filter-btn" data-filter="exo">EXO 🤍</button>
+        <button class="filter-btn" data-filter="cbx">CBX</button>
+        <button class="filter-btn" data-filter="sc">SC</button>
+        <button class="filter-btn" data-filter="baekhyun">Baekhyun 🐶</button>
+        <button class="filter-btn" data-filter="chanyeol">Chanyeol 🐶</button>
+        <button class="filter-btn" data-filter="kai">Kai 🐻</button>
+        <button class="filter-btn" data-filter="do">D.O. 🐧</button>
+        <button class="filter-btn" data-filter="suho">Suho 🐰</button>
+        <button class="filter-btn" data-filter="chen">Chen 🦕</button>
+        <button class="filter-btn" data-filter="xiumin">Xiumin 🐱</button>
+    </div>
+
+    <!-- 統計欄 -->
+    <div class="stats-bar" id="statsBar">
+        <span class="stats-text">📦 收藏進度：<span id="collectedCount">0</span> / <span id="totalVersions">0</span> 個版本</span>
+        <div class="progress-bar-container">
+            <div class="progress-bar-fill" id="progressBarFill" style="width: 0%;"></div>
+        </div>
+        <span class="stats-percent" id="progressPercent">0%</span>
+    </div>
+
+    <!-- 備份功能按鈕 -->
+    <div class="backup-section">
+        <button class="backup-btn" id="exportBtn">📤 匯出備份</button>
+        <button class="backup-btn" id="importBtn">📥 匯入備份</button>
+        <input type="file" id="importFile" accept=".json,application/json" style="display: none;">
+    </div>
+
+    <div class="count-indicator" id="resultCount"></div>
+
+    <!-- 2012 -->
+    <div class="year-section" data-year="2012">
+        <div class="year-label">2012</div>
+        <div class="album-grid">
+            <div class="album-card" data-album="mama" data-category="exo">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="mama" style="background-image: url('https://i.postimg.cc/4dNXRqyz/Mama.jpg'); background-size: cover;">
+                        <span class="placeholder-text">📷 MAMA<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">MAMA <span class="category-badge badge-exo">EXO</span></div>
+                        <span class="album-type">迷你一輯</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <label class="version-item"><input type="checkbox" data-version="mama-k"> EXO-K 韓文 ver.</label>
+                    <label class="version-item"><input type="checkbox" data-version="mama-m"> EXO-M 中文 ver.</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2013 -->
+    <div class="year-section" data-year="2013">
+        <div class="year-label">2013</div>
+        <div class="album-grid">
+            <div class="album-card" data-album="xoxo" data-category="exo">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="xoxo" style="background-image: url('https://i.postimg.cc/nzcnfgrD/xoxo.jpg'); background-size: cover;">
+                        <span class="placeholder-text">📷 XOXO<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">XOXO <span class="category-badge badge-exo">EXO</span></div>
+                        <span class="album-type">正規一輯</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <label class="version-item"><input type="checkbox" data-version="xoxo-kiss"> Kiss 韓文 ver.</label>
+                    <label class="version-item"><input type="checkbox" data-version="xoxo-hug"> Hug 中文 ver.</label>
+                </div>
+            </div>
+            <div class="album-card" data-album="growl" data-category="exo">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="growl" style="background-image: url('https://i.postimg.cc/sXD3CqxG/Growl.jpg'); background-size: cover;">
+                        <span class="placeholder-text">📷 GROWL<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">GROWL <span class="category-badge badge-exo">EXO</span></div>
+                        <span class="album-type">正規一輯改版</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <label class="version-item"><input type="checkbox" data-version="growl-kor"> 韓文 ver.</label>
+                    <label class="version-item"><input type="checkbox" data-version="growl-chn"> 中文 ver.</label>
+                </div>
+            </div>
+            <div class="album-card" data-album="mid" data-category="exo">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="mid" style="background-image: url('https://i.postimg.cc/wvT9YZM3/12月的奇蹟.jpg'); background-size: cover;">
+                        <span class="placeholder-text">📷 12月的奇蹟<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">12月的奇蹟 <span class="category-badge badge-exo">EXO</span></div>
+                        <span class="album-type">冬季特別專輯</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <label class="version-item"><input type="checkbox" data-version="mid-kor"> 韓文 ver.</label>
+                    <label class="version-item"><input type="checkbox" data-version="mid-chn"> 中文 ver.</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2014 -->
+    <div class="year-section" data-year="2014">
+        <div class="year-label">2014</div>
+        <div class="album-grid">
+            <div class="album-card" data-album="overdose" data-category="exo">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="overdose" style="background-image: url('https://i.postimg.cc/HxsT1Rnn/Exo_Koverdose.jpg'); background-size: cover;">
+                        <span class="placeholder-text">📷 Overdose<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">Overdose <span class="category-badge badge-exo">EXO</span></div>
+                        <span class="album-type">迷你二輯</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <label class="version-item"><input type="checkbox" data-version="overdose-k"> EXO-K 韓文 ver.</label>
+                    <label class="version-item"><input type="checkbox" data-version="overdose-m"> EXO-M 中文 ver.</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2015 -->
+    <div class="year-section" data-year="2015">
+        <div class="year-label">2015</div>
+        <div class="album-grid">
+            <div class="album-card" data-album="exodus" data-category="exo">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="exodus" style="background-image: url('https://i.postimg.cc/268CNMyq/EXODUS_EXO.png'); background-size: cover;">
+                        <span class="placeholder-text">📷 EXODUS<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">EXODUS <span class="category-badge badge-exo">EXO</span></div>
+                        <span class="album-type">正規二輯</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <details>
+                        <summary><span class="gold-note">● 韓文 ver. (金色封面)</span> - 8款單封</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="exodus-kor-xiumin"> Xiumin</label>
+                            <label class="sub-item"><input type="checkbox" data-version="exodus-kor-suho"> Suho</label>
+                            <label class="sub-item"><input type="checkbox" data-version="exodus-kor-baekhyun"> Baekhyun</label>
+                            <label class="sub-item"><input type="checkbox" data-version="exodus-kor-chen"> Chen</label>
+                            <label class="sub-item"><input type="checkbox" data-version="exodus-kor-chanyeol"> Chanyeol</label>
+                            <label class="sub-item"><input type="checkbox" data-version="exodus-kor-do"> D.O.</label>
+                            <label class="sub-item"><input type="checkbox" data-version="exodus-kor-kai"> Kai</label>
+                            <label class="sub-item"><input type="checkbox" data-version="exodus-kor-sehun"> Sehun</label>
+                        </div>
+                    </details>
+                    <details>
+                        <summary><span class="silver-note">● 中文 ver. (銀色封面)</span> - 8款單封</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="exodus-chn-xiumin"> Xiumin</label>
+                            <label class="sub-item"><input type="checkbox" data-version="exodus-chn-suho"> Suho</label>
+                            <label class="sub-item"><input type="checkbox" data-version="exodus-chn-baekhyun"> Baekhyun</label>
+                            <label class="sub-item"><input type="checkbox" data-version="exodus-chn-chen"> Chen</label>
+                            <label class="sub-item"><input type="checkbox" data-version="exodus-chn-chanyeol"> Chanyeol</label>
+                            <label class="sub-item"><input type="checkbox" data-version="exodus-chn-do"> D.O.</label>
+                            <label class="sub-item"><input type="checkbox" data-version="exodus-chn-kai"> Kai</label>
+                            <label class="sub-item"><input type="checkbox" data-version="exodus-chn-sehun"> Sehun</label>
+                        </div>
+                    </details>
+                </div>
+            </div>
+            <div class="album-card" data-album="lmr" data-category="exo">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="lmr" style="background-image: url('https://i.postimg.cc/DZy73H08/Love_me_right.jpg'); background-size: cover;">
+                        <span class="placeholder-text">📷 LOVE ME RIGHT<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">LOVE ME RIGHT <span class="category-badge badge-exo">EXO</span></div>
+                        <span class="album-type">正規二輯改版</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <details>
+                        <summary>Photobook ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="lmr-kor"> 韓文 ver.</label>
+                            <label class="sub-item"><input type="checkbox" data-version="lmr-chn"> 中文 ver.</label>
+                        </div>
+                    </details>
+                    <label class="version-item"><input type="checkbox" data-version="lmr-kihno"> Kihno ver.</label>
+                </div>
+            </div>
+            <div class="album-card" data-album="sfy" data-category="exo">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="sfy" style="background-image: url('https://i.postimg.cc/j5dRYm2q/EXO_Sing_for_You.jpg'); background-size: cover;">
+                        <span class="placeholder-text">📷 Sing For You<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">Sing For You <span class="category-badge badge-exo">EXO</span></div>
+                        <span class="album-type">冬季特別專輯</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <details>
+                        <summary>韓文 Photobook ver. (8款單封)</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="sfy-kor-xiumin"> Xiumin</label>
+                            <label class="sub-item"><input type="checkbox" data-version="sfy-kor-suho"> Suho</label>
+                            <label class="sub-item"><input type="checkbox" data-version="sfy-kor-baekhyun"> Baekhyun</label>
+                            <label class="sub-item"><input type="checkbox" data-version="sfy-kor-chen"> Chen</label>
+                            <label class="sub-item"><input type="checkbox" data-version="sfy-kor-chanyeol"> Chanyeol</label>
+                            <label class="sub-item"><input type="checkbox" data-version="sfy-kor-do"> D.O.</label>
+                            <label class="sub-item"><input type="checkbox" data-version="sfy-kor-kai"> Kai</label>
+                            <label class="sub-item"><input type="checkbox" data-version="sfy-kor-sehun"> Sehun</label>
+                        </div>
+                    </details>
+                    <details>
+                        <summary>中文 Photobook ver. (8款單封)</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="sfy-chn-xiumin"> Xiumin</label>
+                            <label class="sub-item"><input type="checkbox" data-version="sfy-chn-suho"> Suho</label>
+                            <label class="sub-item"><input type="checkbox" data-version="sfy-chn-baekhyun"> Baekhyun</label>
+                            <label class="sub-item"><input type="checkbox" data-version="sfy-chn-chen"> Chen</label>
+                            <label class="sub-item"><input type="checkbox" data-version="sfy-chn-chanyeol"> Chanyeol</label>
+                            <label class="sub-item"><input type="checkbox" data-version="sfy-chn-do"> D.O.</label>
+                            <label class="sub-item"><input type="checkbox" data-version="sfy-chn-kai"> Kai</label>
+                            <label class="sub-item"><input type="checkbox" data-version="sfy-chn-sehun"> Sehun</label>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2016 -->
+    <div class="year-section" data-year="2016">
+        <div class="year-label">2016</div>
+        <div class="album-grid">
+            <div class="album-card" data-album="exact" data-category="exo">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="exact" style="background-image: url('https://i.postimg.cc/ydY7CtxV/EXO_EXACT_cover.jpg'); background-size: cover;">
+                        <span class="placeholder-text">📷 EX'ACT<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">EX'ACT <span class="category-badge badge-exo">EXO</span></div>
+                        <span class="album-type">正規三輯</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <details>
+                        <summary>Lucky One Photobook ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="exact-lucky-kor"> 韓文 ver.</label>
+                            <label class="sub-item"><input type="checkbox" data-version="exact-lucky-chn"> 中文 ver.</label>
+                        </div>
+                    </details>
+                    <details>
+                        <summary>Monster Photobook ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="exact-monster-kor"> 韓文 ver.</label>
+                            <label class="sub-item"><input type="checkbox" data-version="exact-monster-chn"> 中文 ver.</label>
+                        </div>
+                    </details>
+                </div>
+            </div>
+            <div class="album-card" data-album="lotto" data-category="exo">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="lotto" style="background-image: url('https://i.postimg.cc/268CNMyr/lotto.png'); background-size: cover;">
+                        <span class="placeholder-text">📷 LOTTO<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">LOTTO <span class="category-badge badge-exo">EXO</span></div>
+                        <span class="album-type">正規三輯改版</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <details>
+                        <summary>Photobook ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="lotto-kor"> 韓文 ver.</label>
+                            <label class="sub-item"><input type="checkbox" data-version="lotto-chn"> 中文 ver.</label>
+                        </div>
+                    </details>
+                    <label class="version-item"><input type="checkbox" data-version="lotto-kihno"> Kihno ver.</label>
+                </div>
+            </div>
+            <div class="album-card" data-album="forlife" data-category="exo">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="forlife" style="background-image: url('https://i.postimg.cc/KzvmhwjF/EXO_For_Life.jpg'); background-size: cover;">
+                        <span class="placeholder-text">📷 For Life<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">For Life <span class="category-badge badge-exo">EXO</span></div>
+                        <span class="album-type">冬季特別專輯</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <label class="version-item"><input type="checkbox" data-version="forlife"> Photobook ver.</label>
+                    <label class="version-item"><input type="checkbox" data-version="forlife-kihno"> Kihno ver.</label>
+                </div>
+            </div>
+            <div class="album-card" data-album="heymama" data-category="cbx">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="heymama" style="background-image: url('https://i.postimg.cc/3RJ3QVNH/Hey_Mama_EXO_CBX_EP.jpg'); background-size: cover;">
+                        <span class="placeholder-text">📷 Hey Mama!<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">Hey Mama! <span class="category-badge badge-cbx">CBX</span></div>
+                        <span class="album-type">CBX 迷你一輯</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <details>
+                        <summary>Photobook ver. (3款單封)</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="heymama-chen"> Chen</label>
+                            <label class="sub-item"><input type="checkbox" data-version="heymama-baekhyun"> Baekhyun</label>
+                            <label class="sub-item"><input type="checkbox" data-version="heymama-xiumin"> Xiumin</label>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2017 -->
+    <div class="year-section" data-year="2017">
+        <div class="year-label">2017</div>
+        <div class="album-grid">
+            <div class="album-card" data-album="thewar" data-category="exo">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="thewar" style="background-image: url('https://i.postimg.cc/wvT9YZMY/Thewar_EXO.jpg'); background-size: cover;">
+                        <span class="placeholder-text">📷 THE WAR<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">THE WAR <span class="category-badge badge-exo">EXO</span></div>
+                        <span class="album-type">正規四輯</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <details>
+                        <summary>韓文 Photobook ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="thewar-a-kor"> Regular A</label>
+                            <label class="sub-item"><input type="checkbox" data-version="thewar-b-kor"> Regular B</label>
+                            <label class="sub-item"><input type="checkbox" data-version="thewar-p-kor"> Private</label>
+                        </div>
+                    </details>
+                    <details>
+                        <summary>中文 Photobook ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="thewar-a-chn"> Regular A</label>
+                            <label class="sub-item"><input type="checkbox" data-version="thewar-b-chn"> Regular B</label>
+                            <label class="sub-item"><input type="checkbox" data-version="thewar-p-chn"> Private</label>
+                        </div>
+                    </details>
+                    <label class="version-item"><input type="checkbox" data-version="thewar-kihno"> Kihno ver.</label>
+                </div>
+            </div>
+            <div class="album-card" data-album="power" data-category="exo">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="power" style="background-image: url('https://i.postimg.cc/N0xQVBsf/Power_of_music.jpg'); background-size: cover;">
+                        <span class="placeholder-text">📷 The Power of Music<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">The Power of Music <span class="category-badge badge-exo">EXO</span></div>
+                        <span class="album-type">正規四輯改版</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <details>
+                        <summary>Photobook ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="power-kor"> 韓文 ver.</label>
+                            <label class="sub-item"><input type="checkbox" data-version="power-chn"> 中文 ver.</label>
+                        </div>
+                    </details>
+                </div>
+            </div>
+            <div class="album-card" data-album="universe" data-category="exo">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="universe" style="background-image: url('https://i.postimg.cc/q7GpY4Jp/universe.jpg'); background-size: cover;">
+                        <span class="placeholder-text">📷 Universe<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">Universe <span class="category-badge badge-exo">EXO</span></div>
+                        <span class="album-type">冬季特別專輯</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <label class="version-item"><input type="checkbox" data-version="universe"> Photobook ver.</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2018 -->
+    <div class="year-section" data-year="2018">
+        <div class="year-label">2018</div>
+        <div class="album-grid">
+            <div class="album-card" data-album="dmumt" data-category="exo">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="dmumt" style="background-image: url('https://i.postimg.cc/vBHGwkTF/tempo.png'); background-size: cover;">
+                        <span class="placeholder-text">📷 DON'T MESS UP MY TEMPO<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">DON'T MESS UP MY TEMPO <span class="category-badge badge-exo">EXO</span></div>
+                        <span class="album-type">正規五輯</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <details>
+                        <summary>Photobook ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="dmumt-allegro"> Allegro</label>
+                            <label class="sub-item"><input type="checkbox" data-version="dmumt-moderato"> Moderato</label>
+                            <label class="sub-item"><input type="checkbox" data-version="dmumt-andante"> Andante</label>
+                        </div>
+                    </details>
+                    <label class="version-item"><input type="checkbox" data-version="dmumt-vivace"> Vivace ver. (限量)</label>
+                </div>
+            </div>
+            <div class="album-card" data-album="loveshot" data-category="exo">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="loveshot" style="background-image: url('https://i.postimg.cc/cJcdj0xW/love_shot.jpg'); background-size: cover;">
+                        <span class="placeholder-text">📷 LOVE SHOT<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">LOVE SHOT <span class="category-badge badge-exo">EXO</span></div>
+                        <span class="album-type">正規五輯改版</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <details>
+                        <summary>Photobook ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="loveshot-love"> Love</label>
+                            <label class="sub-item"><input type="checkbox" data-version="loveshot-shot"> Shot</label>
+                        </div>
+                    </details>
+                </div>
+            </div>
+            <div class="album-card" data-album="blooming" data-category="cbx">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="blooming" style="background-image: url('https://i.postimg.cc/5tmfGb4W/Blooming_Days_CBX.jpg'); background-size: cover;">
+                        <span class="placeholder-text">📷 Blooming Days<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">Blooming Days <span class="category-badge badge-cbx">CBX</span></div>
+                        <span class="album-type">CBX 迷你二輯</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <details>
+                        <summary>Photobook ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="blooming-blooming"> Blooming</label>
+                            <label class="sub-item"><input type="checkbox" data-version="blooming-days"> Days</label>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2019 -->
+    <div class="year-section" data-year="2019">
+        <div class="year-label">2019</div>
+        <div class="album-grid">
+            <div class="album-card" data-album="obsession" data-category="exo">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="obsession" style="background-image: url('https://i.postimg.cc/9fBcSCm3/obsession.jpg'); background-size: cover;">
+                        <span class="placeholder-text">📷 OBSESSION<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">OBSESSION <span class="category-badge badge-exo">EXO</span></div>
+                        <span class="album-type">正規六輯</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <details>
+                        <summary>Photobook ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="obsession-exo"> EXO</label>
+                            <label class="sub-item"><input type="checkbox" data-version="obsession-xexo"> X-EXO</label>
+                            <label class="sub-item"><input type="checkbox" data-version="obsession-obs"> Obsession</label>
+                        </div>
+                    </details>
+                    <label class="version-item"><input type="checkbox" data-version="obsession-kihno"> Kihno ver.</label>
+                </div>
+            </div>
+            <div class="album-card" data-album="whatalife" data-category="sc">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="whatalife" style="background-image: url('https://i.postimg.cc/cJcdj0sF/Exo_SC_What_a_Life.png'); background-size: cover;">
+                        <span class="placeholder-text">📷 What a life<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">What a life <span class="category-badge badge-sc">SC</span></div>
+                        <span class="album-type">SC 迷你一輯</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <details>
+                        <summary>Photobook ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="whatalife-pb-g"> G (Chanyeol)</label>
+                            <label class="sub-item"><input type="checkbox" data-version="whatalife-pb-p"> P (Sehun)</label>
+                            <label class="sub-item"><input type="checkbox" data-version="whatalife-pb-y"> Y (SC)</label>
+                        </div>
+                    </details>
+                    <details>
+                        <summary>Kihno ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="whatalife-kihno-b"> B (Chanyeol)</label>
+                            <label class="sub-item"><input type="checkbox" data-version="whatalife-kihno-p"> P (Sehun)</label>
+                        </div>
+                    </details>
+                </div>
+            </div>
+            <div class="album-card" data-album="aprilflower" data-category="chen">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="aprilflower" style="background-image: url('https://i.postimg.cc/qBDv4J8M/April.jpg'); background-size: cover;">
+                        <span class="placeholder-text">📷 April, and a flower<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">April, and a flower <span class="category-badge badge-chen">CHEN</span></div>
+                        <span class="album-type">迷你一輯</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <details>
+                        <summary>Photobook ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="aprilflower-april"> April</label>
+                            <label class="sub-item"><input type="checkbox" data-version="aprilflower-flower"> Flower</label>
+                        </div>
+                    </details>
+                    <label class="version-item"><input type="checkbox" data-version="aprilflower-kihno"> Kihno ver.</label>
+                </div>
+            </div>
+            <div class="album-card" data-album="citylights" data-category="baekhyun">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="citylights" style="background-image: url('https://i.postimg.cc/52L4B8TZ/citylight.jpg'); background-size: cover;">
+                        <span class="placeholder-text">📷 City Lights<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">City Lights <span class="category-badge badge-baekhyun">BAEKHYUN</span></div>
+                        <span class="album-type">迷你一輯</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <details>
+                        <summary>Photobook ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="citylights-day"> Day</label>
+                            <label class="sub-item"><input type="checkbox" data-version="citylights-night"> Night</label>
+                        </div>
+                    </details>
+                    <label class="version-item"><input type="checkbox" data-version="citylights-kihno"> Kihno ver.</label>
+                </div>
+            </div>
+            <div class="album-card" data-album="dearmydear" data-category="chen">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="dearmydear" style="background-image: url('https://i.postimg.cc/Kvdc30qQ/Dear.jpg'); background-size: cover;">
+                        <span class="placeholder-text">📷 Dear my dear<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">Dear my dear <span class="category-badge badge-chen">CHEN</span></div>
+                        <span class="album-type">迷你二輯</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <details>
+                        <summary>Photobook ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="dearmydear-dear"> Dear</label>
+                            <label class="sub-item"><input type="checkbox" data-version="dearmydear-mydear"> My dear</label>
+                        </div>
+                    </details>
+                    <label class="version-item"><input type="checkbox" data-version="dearmydear-kihno"> Kihno ver.</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2020 -->
+    <div class="year-section" data-year="2020">
+        <div class="year-label">2020</div>
+        <div class="album-grid">
+            <div class="album-card" data-album="1billion" data-category="sc">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="1billion" style="background-image: url('https://i.postimg.cc/02L5KVWL/1billionview.jpg'); background-size: cover;">
+                        <span class="placeholder-text">📷 1 Billion View<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">1 Billion View <span class="category-badge badge-sc">SC</span></div>
+                        <span class="album-type">SC 正規一輯</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <details>
+                        <summary>Photobook ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="1billion-pb-paradise"> Paradise (SC)</label>
+                            <label class="sub-item"><input type="checkbox" data-version="1billion-pb-ocean"> Ocean (Sehun)</label>
+                            <label class="sub-item"><input type="checkbox" data-version="1billion-pb-park"> Park (Chanyeol)</label>
+                        </div>
+                    </details>
+                    <details>
+                        <summary>Kihno ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="1billion-kihno-paradise"> Paradise (SC)</label>
+                            <label class="sub-item"><input type="checkbox" data-version="1billion-kihno-ocean"> Ocean (Sehun)</label>
+                            <label class="sub-item"><input type="checkbox" data-version="1billion-kihno-park"> Park (Chanyeol)</label>
+                        </div>
+                    </details>
+                </div>
+            </div>
+            <div class="album-card" data-album="selfportrait" data-category="suho">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="selfportrait" style="background-image: url('https://i.postimg.cc/pLzWfK47/self.jpg'); background-size: cover;">
+                        <span class="placeholder-text">📷 Self-Portrait<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">Self-Portrait <span class="category-badge badge-suho">SUHO</span></div>
+                        <span class="album-type">迷你一輯</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <details>
+                        <summary>Photobook ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="selfportrait-archive1"> Archive #1</label>
+                            <label class="sub-item"><input type="checkbox" data-version="selfportrait-archive2"> Archive #2</label>
+                        </div>
+                    </details>
+                    <label class="version-item"><input type="checkbox" data-version="selfportrait-kihno"> Kihno ver.</label>
+                </div>
+            </div>
+            <div class="album-card" data-album="delight" data-category="baekhyun">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="delight" style="background-image: url('https://i.postimg.cc/L8L9tjGd/delight.jpg'); background-size: cover;">
+                        <span class="placeholder-text">📷 Delight<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">Delight <span class="category-badge badge-baekhyun">BAEKHYUN</span></div>
+                        <span class="album-type">迷你二輯</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <details>
+                        <summary>Photobook ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="delight-cinnamon"> Cinnamon</label>
+                            <label class="sub-item"><input type="checkbox" data-version="delight-honey"> Honey</label>
+                            <label class="sub-item"><input type="checkbox" data-version="delight-mint"> Mint</label>
+                            <label class="sub-item"><input type="checkbox" data-version="delight-chemistry"> Chemistry</label>
+                        </div>
+                    </details>
+                    <details>
+                        <summary>Kihno ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="delight-kihno-cinnamon"> Cinnamon</label>
+                            <label class="sub-item"><input type="checkbox" data-version="delight-kihno-honey"> Honey</label>
+                            <label class="sub-item"><input type="checkbox" data-version="delight-kihno-mint"> Mint</label>
+                        </div>
+                    </details>
+                </div>
+            </div>
+            <div class="album-card" data-album="kai1" data-category="kai">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="kai1" style="background-image: url('https://i.postimg.cc/P5YXW190/kai.jpg'); background-size: cover;">
+                        <span class="placeholder-text">📷 KAI (開)<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">KAI (開) <span class="category-badge badge-kai">KAI</span></div>
+                        <span class="album-type">迷你一輯</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <details>
+                        <summary>Photobook ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="kai1-x"> X</label>
+                            <label class="sub-item"><input type="checkbox" data-version="kai1-y"> Y</label>
+                            <label class="sub-item"><input type="checkbox" data-version="kai1-z"> Z</label>
+                        </div>
+                    </details>
+                    <details>
+                        <summary>Flip Book ver. (3款)</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="kai1-flip-1"> Flip Book 1</label>
+                            <label class="sub-item"><input type="checkbox" data-version="kai1-flip-2"> Flip Book 2</label>
+                            <label class="sub-item"><input type="checkbox" data-version="kai1-flip-3"> Flip Book 3</label>
+                        </div>
+                    </details>
+                    <details>
+                        <summary>Jewel Case ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="kai1-jc-a"> A</label>
+                            <label class="sub-item"><input type="checkbox" data-version="kai1-jc-b"> B</label>
+                            <label class="sub-item"><input type="checkbox" data-version="kai1-jc-c"> C</label>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2021 -->
+    <div class="year-section" data-year="2021">
+        <div class="year-label">2021</div>
+        <div class="album-grid">
+            <div class="album-card" data-album="dftf" data-category="exo">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="dftf" style="background-image: url('https://i.postimg.cc/6QhBSt9Y/Exo_Don_t_Fight_the_Feeling.png'); background-size: cover;">
+                        <span class="placeholder-text">📷 DON'T FIGHT THE FEELING<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">DON'T FIGHT THE FEELING <span class="category-badge badge-exo">EXO</span></div>
+                        <span class="album-type">特別專輯</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <details>
+                        <summary>Photobook ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="dftf-ep01"> Episode 01</label>
+                            <label class="sub-item"><input type="checkbox" data-version="dftf-ep02"> Episode 02</label>
+                        </div>
+                    </details>
+                    <label class="version-item"><input type="checkbox" data-version="dftf-jc"> Jewel Case ver.</label>
+                    <details>
+                        <summary>Expansion ver. (6款單封)</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="dftf-exp-xiumin"> Xiumin</label>
+                            <label class="sub-item"><input type="checkbox" data-version="dftf-exp-baekhyun"> Baekhyun</label>
+                            <label class="sub-item"><input type="checkbox" data-version="dftf-exp-chanyeol"> Chanyeol</label>
+                            <label class="sub-item"><input type="checkbox" data-version="dftf-exp-do"> D.O.</label>
+                            <label class="sub-item"><input type="checkbox" data-version="dftf-exp-kai"> Kai</label>
+                            <label class="sub-item"><input type="checkbox" data-version="dftf-exp-sehun"> Sehun</label>
+                        </div>
+                    </details>
+                </div>
+            </div>
+            <div class="album-card" data-album="bambi" data-category="baekhyun">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="bambi" style="background-image: url('https://i.postimg.cc/cLwxRfPN/bambi.jpg'); background-size: cover;">
+                        <span class="placeholder-text">📷 Bambi<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">Bambi <span class="category-badge badge-baekhyun">BAEKHYUN</span></div>
+                        <span class="album-type">迷你三輯</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <details>
+                        <summary>Photobook ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="bambi-bambi"> Bambi</label>
+                            <label class="sub-item"><input type="checkbox" data-version="bambi-nightrain"> Night Rain</label>
+                        </div>
+                    </details>
+                    <details>
+                        <summary>Jewel Case ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="bambi-jc-misty"> Misty</label>
+                            <label class="sub-item"><input type="checkbox" data-version="bambi-jc-dreamy"> Dreamy</label>
+                        </div>
+                    </details>
+                </div>
+            </div>
+            <div class="album-card" data-album="empathy" data-category="do">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="empathy" style="background-image: url('https://i.postimg.cc/9QZmdysC/rose.jpg'); background-size: cover;">
+                        <span class="placeholder-text">📷 Empathy (共感)<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">Empathy (共感) <span class="category-badge badge-do">D.O.</span></div>
+                        <span class="album-type">迷你一輯</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <label class="version-item"><input type="checkbox" data-version="empathy-gray"> Gray (Photobook ver.)</label>
+                    <details>
+                        <summary>Digipack ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="empathy-digi-blue"> Blue</label>
+                            <label class="sub-item"><input type="checkbox" data-version="empathy-digi-gray"> Gray</label>
+                        </div>
+                    </details>
+                </div>
+            </div>
+            <div class="album-card" data-album="peaches" data-category="kai">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="peaches" style="background-image: url('https://i.postimg.cc/htTDLVNP/peaches.jpg'); background-size: cover;">
+                        <span class="placeholder-text">📷 Peaches<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">Peaches <span class="category-badge badge-kai">KAI</span></div>
+                        <span class="album-type">迷你二輯</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <details>
+                        <summary>Photobook ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="peaches-peaches"> Peaches</label>
+                            <label class="sub-item"><input type="checkbox" data-version="peaches-kisses"> Kisses</label>
+                        </div>
+                    </details>
+                    <label class="version-item"><input type="checkbox" data-version="peaches-digipack"> Digipack ver.</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2022 -->
+    <div class="year-section" data-year="2022">
+        <div class="year-label">2022</div>
+        <div class="album-grid">
+            <div class="album-card" data-album="greysuit" data-category="suho">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="greysuit" style="background-image: url('https://i.postimg.cc/Z5pb86XY/Suho_Grey_Suit.jpg'); background-size: cover;">
+                        <span class="placeholder-text">📷 Grey Suit<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">Grey Suit <span class="category-badge badge-suho">SUHO</span></div>
+                        <span class="album-type">迷你二輯</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <details>
+                        <summary>Photobook ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="greysuit-color"> Color</label>
+                            <label class="sub-item"><input type="checkbox" data-version="greysuit-grey"> Grey</label>
+                        </div>
+                    </details>
+                    <label class="version-item"><input type="checkbox" data-version="greysuit-time"> Time (Digipack ver.)</label>
+                </div>
+            </div>
+            <div class="album-card" data-album="brandnew" data-category="xiumin">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="brandnew" style="background-image: url('https://i.postimg.cc/8zMpRLxs/xiumin_brandnew_2.jpg'); background-size: cover;">
+                        <span class="placeholder-text">📷 Brand New<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">Brand New <span class="category-badge badge-xiumin">XIUMIN</span></div>
+                        <span class="album-type">迷你一輯</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <details>
+                        <summary>Photobook ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="brandnew-oasis"> Oasis</label>
+                            <label class="sub-item"><input type="checkbox" data-version="brandnew-desert"> Desert</label>
+                        </div>
+                    </details>
+                    <label class="version-item"><input type="checkbox" data-version="brandnew-mriage"> Mriage (Digipack ver.)</label>
+                    <label class="version-item"><input type="checkbox" data-version="brandnew-smini"> SMini ver.</label>
+                </div>
+            </div>
+            <div class="album-card" data-album="lastscene" data-category="chen">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="lastscene" style="background-image: url('https://i.postimg.cc/t4Wq3F8s/last_scence.jpg'); background-size: cover;">
+                        <span class="placeholder-text">📷 Last Scene<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">Last Scene <span class="category-badge badge-chen">CHEN</span></div>
+                        <span class="album-type">迷你三輯</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <details>
+                        <summary>Photobook ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="lastscene-pb-violet"> Violet</label>
+                            <label class="sub-item"><input type="checkbox" data-version="lastscene-pb-gray"> Gray</label>
+                        </div>
+                    </details>
+                    <details>
+                        <summary>Digipack ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="lastscene-digi-violet"> Violet</label>
+                            <label class="sub-item"><input type="checkbox" data-version="lastscene-digi-gray"> Gray</label>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2023 -->
+    <div class="year-section" data-year="2023">
+        <div class="year-label">2023</div>
+        <div class="album-grid">
+            <div class="album-card" data-album="exist" data-category="exo">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="exist" style="background-image: url('https://i.postimg.cc/MGwWdv8Y/Exo_Exist.jpg'); background-size: cover;">
+                        <span class="placeholder-text">📷 EXIST<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">EXIST <span class="category-badge badge-exo">EXO</span></div>
+                        <span class="album-type">正規七輯</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <details>
+                        <summary>Photobook ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="exist-e"> E</label>
+                            <label class="sub-item"><input type="checkbox" data-version="exist-x"> X</label>
+                            <label class="sub-item"><input type="checkbox" data-version="exist-o"> O</label>
+                        </div>
+                    </details>
+                    <details>
+                        <summary>Digipack ver. (8款單封)</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="exist-digi-xiumin"> Xiumin</label>
+                            <label class="sub-item"><input type="checkbox" data-version="exist-digi-suho"> Suho</label>
+                            <label class="sub-item"><input type="checkbox" data-version="exist-digi-baekhyun"> Baekhyun</label>
+                            <label class="sub-item"><input type="checkbox" data-version="exist-digi-chen"> Chen</label>
+                            <label class="sub-item"><input type="checkbox" data-version="exist-digi-chanyeol"> Chanyeol</label>
+                            <label class="sub-item"><input type="checkbox" data-version="exist-digi-do"> D.O.</label>
+                            <label class="sub-item"><input type="checkbox" data-version="exist-digi-kai"> Kai</label>
+                            <label class="sub-item"><input type="checkbox" data-version="exist-digi-sehun"> Sehun</label>
+                        </div>
+                    </details>
+                    <details>
+                        <summary>SMini ver. (8款單封)</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="exist-smini-xiumin"> Xiumin</label>
+                            <label class="sub-item"><input type="checkbox" data-version="exist-smini-suho"> Suho</label>
+                            <label class="sub-item"><input type="checkbox" data-version="exist-smini-baekhyun"> Baekhyun</label>
+                            <label class="sub-item"><input type="checkbox" data-version="exist-smini-chen"> Chen</label>
+                            <label class="sub-item"><input type="checkbox" data-version="exist-smini-chanyeol"> Chanyeol</label>
+                            <label class="sub-item"><input type="checkbox" data-version="exist-smini-do"> D.O.</label>
+                            <label class="sub-item"><input type="checkbox" data-version="exist-smini-kai"> Kai</label>
+                            <label class="sub-item"><input type="checkbox" data-version="exist-smini-sehun"> Sehun</label>
+                        </div>
+                    </details>
+                </div>
+            </div>
+            <div class="album-card" data-album="rover" data-category="kai">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="rover" style="background-image: url('https://i.postimg.cc/X7TNBs1n/rover.jpg'); background-size: cover;">
+                        <span class="placeholder-text">📷 Rover<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">Rover <span class="category-badge badge-kai">KAI</span></div>
+                        <span class="album-type">迷你三輯</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <details>
+                        <summary>Photobook ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="rover-pb-1"> Ver. 1</label>
+                            <label class="sub-item"><input type="checkbox" data-version="rover-pb-2"> Ver. 2</label>
+                        </div>
+                    </details>
+                    <label class="version-item"><input type="checkbox" data-version="rover-digipack"> Digipack ver.</label>
+                    <label class="version-item"><input type="checkbox" data-version="rover-sleeve"> Sleeve ver.</label>
+                    <label class="version-item"><input type="checkbox" data-version="rover-smini"> SMini ver.</label>
+                </div>
+            </div>
+            <div class="album-card" data-album="expectation" data-category="do">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="expectation" style="background-image: url('https://i.postimg.cc/VknfqX2v/somebody.jpg'); background-size: cover;">
+                        <span class="placeholder-text">📷 Expectation (期待)<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">Expectation (期待) <span class="category-badge badge-do">D.O.</span></div>
+                        <span class="album-type">迷你二輯</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <details>
+                        <summary>Photobook ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="expectation-pb-note"> Note</label>
+                            <label class="sub-item"><input type="checkbox" data-version="expectation-pb-film"> Film</label>
+                        </div>
+                    </details>
+                    <details>
+                        <summary>SMini ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="expectation-smini-a"> A</label>
+                            <label class="sub-item"><input type="checkbox" data-version="expectation-smini-b"> B</label>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2024 -->
+    <div class="year-section" data-year="2024">
+        <div class="year-label">2024</div>
+        <div class="album-grid">
+            <div class="album-card" data-album="blossom" data-category="do">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="blossom" style="background-image: url('https://i.postimg.cc/15LRVvCJ/Blssom.jpg'); background-size: cover;">
+                        <span class="placeholder-text">📷 Blossom<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">Blossom <span class="category-badge badge-do">D.O.</span></div>
+                        <span class="album-type">迷你三輯</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <details>
+                        <summary>Photobook ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="blossom-mars"> Mars</label>
+                            <label class="sub-item"><input type="checkbox" data-version="blossom-chelsea"> Chelsea</label>
+                        </div>
+                    </details>
+                </div>
+            </div>
+            <div class="album-card" data-album="1to3" data-category="suho">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="1to3" style="background-image: url('https://i.postimg.cc/3xm8X2zy/1to3.jpg'); background-size: cover;">
+                        <span class="placeholder-text">📷 1 to 3 (點線面)<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">1 to 3 (點線面) <span class="category-badge badge-suho">SUHO</span></div>
+                        <span class="album-type">迷你三輯</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <details>
+                        <summary>Photobook ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="1to3-exclam"> !</label>
+                            <label class="sub-item"><input type="checkbox" data-version="1to3-question"> ?</label>
+                        </div>
+                    </details>
+                    <label class="version-item"><input type="checkbox" data-version="1to3-tape"> Tape ver. (錄音帶)</label>
+                    <label class="version-item"><input type="checkbox" data-version="1to3-smini"> SMini ver.</label>
+                </div>
+            </div>
+            <div class="album-card" data-album="door" data-category="chen">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="door" style="background-image: url('https://i.postimg.cc/y8c1m02Z/door.jpg'); background-size: cover;">
+                        <span class="placeholder-text">📷 DOOR<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">DOOR <span class="category-badge badge-chen">CHEN</span></div>
+                        <span class="album-type">迷你四輯</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <details>
+                        <summary>Photobook ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="door-blank"> Blank</label>
+                            <label class="sub-item"><input type="checkbox" data-version="door-stack"> Stack</label>
+                        </div>
+                    </details>
+                </div>
+            </div>
+            <div class="album-card" data-album="blackout" data-category="chanyeol">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="blackout" style="background-image: url('https://i.postimg.cc/8zMpRLxr/blackout.jpg'); background-size: cover;">
+                        <span class="placeholder-text">📷 Black Out<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">Black Out <span class="category-badge badge-chanyeol">CHANYEOL</span></div>
+                        <span class="album-type">迷你一輯</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <label class="version-item"><input type="checkbox" data-version="blackout-special"> Special ver.</label>
+                    <details>
+                        <summary>Photobook ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="blackout-day"> Day</label>
+                            <label class="sub-item"><input type="checkbox" data-version="blackout-night"> Night</label>
+                        </div>
+                    </details>
+                    <label class="version-item"><input type="checkbox" data-version="blackout-smini"> SMini ver.</label>
+                </div>
+            </div>
+            <div class="album-card" data-album="helloworld" data-category="baekhyun">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="helloworld" style="background-image: url('https://i.postimg.cc/0yDkY7hS/hello_world.jpg'); background-size: cover;">
+                        <span class="placeholder-text">📷 Hello, World<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">Hello, World <span class="category-badge badge-baekhyun">BAEKHYUN</span></div>
+                        <span class="album-type">迷你四輯</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <details>
+                        <summary>Photobook ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="helloworld-hello"> Hello</label>
+                            <label class="sub-item"><input type="checkbox" data-version="helloworld-world"> World</label>
+                        </div>
+                    </details>
+                    <label class="version-item"><input type="checkbox" data-version="helloworld-folder"> Folder ver.</label>
+                    <label class="version-item"><input type="checkbox" data-version="helloworld-pineapple"> Pineapple ver. (罐裝)</label>
+                    <details>
+                        <summary>Jewel Case ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="helloworld-jc-world"> World</label>
+                            <label class="sub-item"><input type="checkbox" data-version="helloworld-jc-hello"> Hello</label>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2025 -->
+    <div class="year-section" data-year="2025">
+        <div class="year-label">2025</div>
+        <div class="album-grid">
+            <div class="album-card" data-album="interviewx" data-category="xiumin">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="interviewx" style="background-image: url('https://i.postimg.cc/3whKndHw/X.jpg'); background-size: cover;">
+                        <span class="placeholder-text">📷 Interview X<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">Interview X <span class="category-badge badge-xiumin">XIUMIN</span></div>
+                        <span class="album-type">迷你二輯</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <details>
+                        <summary>Photobook ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="interviewx-xiu"> Xiu</label>
+                            <label class="sub-item"><input type="checkbox" data-version="interviewx-min"> Min</label>
+                        </div>
+                    </details>
+                    <label class="version-item"><input type="checkbox" data-version="interviewx-interviewbook"> Interviewbook ver.</label>
+                    <label class="version-item"><input type="checkbox" data-version="interviewx-kiwee"> Kiwee ver.</label>
+                </div>
+            </div>
+            <div class="album-card" data-album="waitonme" data-category="kai">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="waitonme" style="background-image: url('https://i.postimg.cc/8CG1tjV5/wait_on_me.jpg'); background-size: cover;">
+                        <span class="placeholder-text">📷 Wait On Me<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">Wait On Me <span class="category-badge badge-kai">KAI</span></div>
+                        <span class="album-type">迷你四輯</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <details>
+                        <summary>Photobook ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="waitonme-pb-driver"> Driver</label>
+                            <label class="sub-item"><input type="checkbox" data-version="waitonme-pb-ruler"> Ruler</label>
+                        </div>
+                    </details>
+                    <label class="version-item"><input type="checkbox" data-version="waitonme-player"> Player ver.</label>
+                    <label class="version-item"><input type="checkbox" data-version="waitonme-sleeve"> Sleeve ver.</label>
+                    <label class="version-item"><input type="checkbox" data-version="waitonme-wing"> Wing ver. (Key ring)</label>
+                </div>
+            </div>
+            <div class="album-card" data-album="essenceofreverie" data-category="baekhyun">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="essenceofreverie" style="background-image: url('https://i.postimg.cc/2ShkQnMs/ess.jpg'); background-size: cover;">
+                        <span class="placeholder-text">📷 Essence of Reverie<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">Essence of Reverie <span class="category-badge badge-baekhyun">BAEKHYUN</span></div>
+                        <span class="album-type">迷你五輯</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <details>
+                        <summary>Photobook ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="essenceofreverie-pb-essence"> Essence</label>
+                            <label class="sub-item"><input type="checkbox" data-version="essenceofreverie-pb-reverie"> Reverie</label>
+                        </div>
+                    </details>
+                    <label class="version-item"><input type="checkbox" data-version="essenceofreverie-kkurujam"> Kkuru Jam ver. (Special)</label>
+                    <label class="version-item"><input type="checkbox" data-version="essenceofreverie-kiwee"> Kiwee ver.</label>
+                </div>
+            </div>
+            <div class="album-card" data-album="whoareyou" data-category="suho">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="whoareyou" style="background-image: url('https://i.postimg.cc/LsSHNnMn/who_are_you.jpg'); background-size: cover;">
+                        <span class="placeholder-text">📷 Who Are You<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">Who Are You <span class="category-badge badge-suho">SUHO</span></div>
+                        <span class="album-type">迷你四輯</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <label class="version-item"><input type="checkbox" data-version="whoareyou-who"> Who Are You ver.</label>
+                    <label class="version-item"><input type="checkbox" data-version="whoareyou-stranger"> Stranger ver.</label>
+                    <details>
+                        <summary>SMini ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="whoareyou-smini-a"> A</label>
+                            <label class="sub-item"><input type="checkbox" data-version="whoareyou-smini-b"> B</label>
+                        </div>
+                    </details>
+                </div>
+            </div>
+ <div class="album-card" data-album="arcadia" data-category="chen">
+    <div class="album-header">
+        <div class="cover-upload has-image" data-cover-for="arcadia" style="background-image: url('https://i.postimg.cc/CK4wtShg/Chen_Arcadia_digital_album_cover.webp'); background-size: cover;">
+            <span class="placeholder-text" style="opacity: 0;">📷 Arcadia<br>點擊上傳</span>
+            <input type="file" accept="image/*">
+        </div>
+        <div class="album-meta">
+            <div class="album-title">Arcadia <span class="category-badge badge-chen">CHEN</span></div>
+            <span class="album-type">迷你五輯</span>
+        </div>
+    </div>
+    <div class="version-list">
+        <details>
+            <summary>Photobook ver.</summary>
+            <div class="sub-version-grid">
+                <label class="sub-item"><input type="checkbox" data-version="arcadia-on"> On</label>
+                <label class="sub-item"><input type="checkbox" data-version="arcadia-off"> Off</label>
+            </div>
+        </details>
+        <label class="version-item"><input type="checkbox" data-version="arcadia-kiwee"> Kiwee ver.</label>
+    </div>
+</div>
+            <div class="album-card" data-album="upsidedown" data-category="chanyeol">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="upsidedown" style="background-image: url('https://i.postimg.cc/0Nv8cbqY/upside_down.jpg'); background-size: cover;">
+                        <span class="placeholder-text">📷 Upside Down<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">Upside Down <span class="category-badge badge-chanyeol">CHANYEOL</span></div>
+                        <span class="album-type">迷你二輯</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <details>
+                        <summary>Photobook ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="upsidedown-on"> On</label>
+                            <label class="sub-item"><input type="checkbox" data-version="upsidedown-off"> Off</label>
+                        </div>
+                    </details>
+                    <label class="version-item"><input type="checkbox" data-version="upsidedown-selfie"> Selfie ver.</label>
+                    <details>
+                        <summary>SMini ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="upsidedown-smini-0v"> 0V</label>
+                            <label class="sub-item"><input type="checkbox" data-version="upsidedown-smini-1bv"> 1BV</label>
+                        </div>
+                    </details>
+                </div>
+            </div>
+<div class="album-card" data-album="bliss" data-category="do">
+    <div class="album-header">
+        <div class="cover-upload has-image" data-cover-for="bliss" style="background-image: url('https://i.postimg.cc/xdP97n0g/D_O_Bliss_digital_album_cover.webp'); background-size: cover;">
+            <span class="placeholder-text" style="opacity: 0;">📷 BLISS<br>點擊上傳</span>
+            <input type="file" accept="image/*">
+        </div>
+        <div class="album-meta">
+            <div class="album-title">BLISS <span class="category-badge badge-do">D.O.</span></div>
+            <span class="album-type">正規一輯</span>
+        </div>
+    </div>
+    <div class="version-list">
+        <details>
+            <summary>Photobook ver.</summary>
+            <div class="sub-version-grid">
+                <label class="sub-item"><input type="checkbox" data-version="bliss-sing"> Sing</label>
+                <label class="sub-item"><input type="checkbox" data-version="bliss-along"> Along</label>
+            </div>
+        </details>
+    </div>
+</div>
+
+    <!-- 2026 -->
+    <div class="year-section" data-year="2026">
+        <div class="year-label">2026</div>
+        <div class="album-grid">
+            <div class="album-card" data-album="reverxe" data-category="exo">
+                <div class="album-header">
+                    <div class="cover-upload" data-cover-for="reverxe" style="background-image: url('https://i.postimg.cc/qRMpHSqX/Reverxe_cover.png'); background-size: cover;">
+                        <span class="placeholder-text">📷 REVERXE<br>點擊上傳</span>
+                        <input type="file" accept="image/*">
+                    </div>
+                    <div class="album-meta">
+                        <div class="album-title">REVERXE <span class="category-badge badge-exo">EXO</span></div>
+                        <span class="album-type">正規八輯</span>
+                    </div>
+                </div>
+                <div class="version-list">
+                    <details>
+                        <summary>Photobook ver.</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="reverxe-cube"> Cube</label>
+                            <label class="sub-item"><input type="checkbox" data-version="reverxe-reverse"> Reverse</label>
+                        </div>
+                    </details>
+                    <details>
+                        <summary>成員個人 ver. (5款)</summary>
+                        <div class="sub-version-grid">
+                            <label class="sub-item"><input type="checkbox" data-version="reverxe-suho"> Suho</label>
+                            <label class="sub-item"><input type="checkbox" data-version="reverxe-chanyeol"> Chanyeol</label>
+                            <label class="sub-item"><input type="checkbox" data-version="reverxe-do"> D.O.</label>
+                            <label class="sub-item"><input type="checkbox" data-version="reverxe-kai"> Kai</label>
+                            <label class="sub-item"><input type="checkbox" data-version="reverxe-sehun"> Sehun</label>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-note">
+        💡 所有勾選狀態同封面圖片都會自動保存喺你嘅瀏覽器 · 可按「匯出備份」保存進度
+    </div>
+</div>
+
+<script>
+    (function() {
+        // 統計進度功能
+        function updateStats() {
+            const allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+            const total = allCheckboxes.length;
+            const collected = Array.from(allCheckboxes).filter(cb => cb.checked).length;
+            const percent = total > 0 ? Math.round((collected / total) * 100) : 0;
+            
+            document.getElementById('collectedCount').textContent = collected;
+            document.getElementById('totalVersions').textContent = total;
+            document.getElementById('progressBarFill').style.width = percent + '%';
+            document.getElementById('progressPercent').textContent = percent + '%';
+        }
+
+        // 保存 checkbox 狀態
+        function saveCheckboxes() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const state = {};
+            checkboxes.forEach(cb => {
+                if (cb.dataset.version) {
+                    state[cb.dataset.version] = cb.checked;
+                }
+            });
+            localStorage.setItem('exoChecklist', JSON.stringify(state));
+            updateStats();
+        }
+
+        function loadCheckboxes() {
+            const saved = localStorage.getItem('exoChecklist');
+            if (saved) {
+                try {
+                    const state = JSON.parse(saved);
+                    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+                    checkboxes.forEach(cb => {
+                        if (cb.dataset.version && state.hasOwnProperty(cb.dataset.version)) {
+                            cb.checked = state[cb.dataset.version];
+                        }
+                    });
+                } catch(e) {}
+            }
+            updateStats();
+        }
+
+        document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+            cb.addEventListener('change', saveCheckboxes);
+        });
+
+        // 封面圖片上傳功能
+        function initCoverUpload() {
+            const coverDivs = document.querySelectorAll('.cover-upload');
+            
+            coverDivs.forEach(div => {
+                const input = div.querySelector('input[type="file"]');
+                const albumKey = div.dataset.coverFor;
+                
+                const savedImage = localStorage.getItem(`cover_${albumKey}`);
+                if (savedImage) {
+                    div.style.backgroundImage = `url('${savedImage}')`;
+                    div.style.backgroundSize = 'cover';
+                    div.classList.add('has-image');
+                    const placeholder = div.querySelector('.placeholder-text');
+                    if (placeholder) placeholder.style.opacity = '0';
+                }
+                
+                div.addEventListener('click', (e) => {
+                    if (e.target.tagName !== 'INPUT') {
+                        input.click();
+                    }
+                });
+                
+                input.addEventListener('change', (e) => {
+                    const file = input.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = (event) => {
+                            const imageData = event.target.result;
+                            div.style.backgroundImage = `url('${imageData}')`;
+                            div.style.backgroundSize = 'cover';
+                            div.classList.add('has-image');
+                            const placeholder = div.querySelector('.placeholder-text');
+                            if (placeholder) placeholder.style.opacity = '0';
+                            
+                            try {
+                                localStorage.setItem(`cover_${albumKey}`, imageData);
+                            } catch(e) {
+                                console.warn('圖片太大，無法保存');
+                            }
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            });
+        }
+
+        // 匯出備份功能
+        function exportBackup() {
+            const backup = {
+                checkboxes: {},
+                covers: {}
+            };
+            
+            document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                if (cb.dataset.version) {
+                    backup.checkboxes[cb.dataset.version] = cb.checked;
+                }
+            });
+            
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key.startsWith('cover_')) {
+                    backup.covers[key] = localStorage.getItem(key);
+                }
+            }
+            
+            const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `exo_backup_${new Date().toISOString().slice(0,10)}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // 匯入備份功能
+        function importBackup(file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const backup = JSON.parse(e.target.result);
+                    
+                    if (backup.checkboxes) {
+                        document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                            if (cb.dataset.version && backup.checkboxes.hasOwnProperty(cb.dataset.version)) {
+                                cb.checked = backup.checkboxes[cb.dataset.version];
+                            }
+                        });
+                        saveCheckboxes();
+                    }
+                    
+                    if (backup.covers) {
+                        for (const key in backup.covers) {
+                            localStorage.setItem(key, backup.covers[key]);
+                        }
+                        location.reload();
+                    }
+                    
+                    alert('✅ 備份匯入成功！');
+                } catch (error) {
+                    alert('❌ 備份檔案格式錯誤');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // 分類篩選功能
+        function initFilter() {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const albumCards = document.querySelectorAll('.album-card');
+            const yearSections = document.querySelectorAll('.year-section');
+            const resultCount = document.getElementById('resultCount');
+
+            function updateFilter(selectedFilter) {
+                let visibleCount = 0;
+                
+                filterBtns.forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.dataset.filter === selectedFilter) {
+                        btn.classList.add('active');
+                    }
+                });
+
+                albumCards.forEach(card => {
+                    const category = card.dataset.category;
+                    if (selectedFilter === 'all' || category === selectedFilter) {
+                        card.classList.remove('hidden-card');
+                        visibleCount++;
+                    } else {
+                        card.classList.add('hidden-card');
+                    }
+                });
+
+                yearSections.forEach(section => {
+                    const cardsInSection = section.querySelectorAll('.album-card');
+                    const visibleCards = Array.from(cardsInSection).filter(card => !card.classList.contains('hidden-card'));
+                    if (visibleCards.length === 0) {
+                        section.classList.add('hidden-section');
+                    } else {
+                        section.classList.remove('hidden-section');
+                    }
+                });
+
+                resultCount.textContent = `顯示 ${visibleCount} 張專輯`;
+            }
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const filter = btn.dataset.filter;
+                    updateFilter(filter);
+                });
+            });
+
+            updateFilter('all');
+        }
+
+        // 初始化
+        loadCheckboxes();
+        initCoverUpload();
+        initFilter();
+        
+        // 備份按鈕事件
+        document.getElementById('exportBtn').addEventListener('click', exportBackup);
+        document.getElementById('importBtn').addEventListener('click', function() {
+            document.getElementById('importFile').click();
+        });
+        document.getElementById('importFile').addEventListener('change', function(e) {
+            if (this.files.length > 0) {
+                importBackup(this.files[0]);
+            }
+        });
+        
+        // MutationObserver 確保新 checkbox 都有保存功能
+        const observer = new MutationObserver(() => {
+            document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                if (!cb.hasAttribute('data-listener')) {
+                    cb.setAttribute('data-listener', 'true');
+                    cb.addEventListener('change', saveCheckboxes);
+                }
+            });
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
+    })();
+</script>
+
+</body>
+</html>
